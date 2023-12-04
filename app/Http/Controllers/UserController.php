@@ -33,6 +33,8 @@ class UserController extends Controller
             return response()->json($validation->errors(), 422);
         }
 
+        // dd($request->status);
+
         $user = new User;
         $user->username = $request->username;
         $user->email = $request->email;
@@ -40,9 +42,12 @@ class UserController extends Controller
         $user->status = $request->status;
         $user->save();
 
-        if ($request->status == 'dosen')
+        // dd($user->status);
+
+        if ($user->status == 'dosen')
             return view('admin.dosen.create', compact('user'));
-        return view('admin.mahasiswa.create', compact('user'));
+        else
+            return view('admin.mahasiswa.create', compact('user'));
     }
 
     /**

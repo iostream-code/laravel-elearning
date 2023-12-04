@@ -70,10 +70,14 @@
                                 {{ $data->asal }}
                             </td>
                             <td class="flex gap-2 px-6 py-4">
-                                <a href="#"
+                                <a href="{{ route('mahasiswa_edit', $data) }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a href="#"
-                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                                <form action="{{ route('mahasiswa_delete', $data) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
