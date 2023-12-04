@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,7 @@ class DosenController extends Controller
         if ($validation->fails()) {
             return response()->json($validation->errors(), 422);
         }
+
         // NIP 1998091220151001
         Dosen::create([
             'user_id' => $request->user_id,
@@ -67,7 +69,7 @@ class DosenController extends Controller
      */
     public function edit(Dosen $dosen)
     {
-        //
+        return view('admin.dosen.edit', compact('dosen'));
     }
 
     /**
@@ -75,14 +77,39 @@ class DosenController extends Controller
      */
     public function update(Request $request, Dosen $dosen)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'nip' => 'required|min:16',
+            'nama' => 'required',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json($validation->errors(), 422);
+        }
+
+        // NIP 1998091220151001
+        $dosen->update([
+            'user_id' => $request->user_id,
+            'nip' => $request->nip,
+            'nama' => $request->nama,
+            'gender' => $request->gender,
+            'usia' => $request->usia,
+            'asal' => $request->asal,
+        ]);
+
+        return redirect()->route('dosen_index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dosen $dosen)
+    public function delete(Dosen $dosen)
     {
-        //
+        $user = User::where('id', $dosen->user_id);
+
+        if ($dosen->delete())
+            $user->delete();
+
+        return redirect()->route('dosen_index');
     }
 }

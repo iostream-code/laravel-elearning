@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MahasiswaController extends Controller
 {
@@ -22,7 +24,7 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.mahasiswa.create');
     }
 
     /**
@@ -30,7 +32,27 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'nim' => 'required|min:10',
+            'nama' => 'required',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json($validation->errors(), 422);
+        }
+
+        // NIM 3120600016
+        Mahasiswa::create([
+            'user_id' => $request->user_id,
+            'nip' => $request->nim,
+            'nama' => $request->nama,
+            'gender' => $request->gender,
+            'tgl_lahir' => $request->tgl_lahir,
+            'asal' => $request->asal,
+        ]);
+
+        return redirect()->route('mahasiswa_index');
     }
 
     /**
@@ -46,7 +68,7 @@ class MahasiswaController extends Controller
      */
     public function edit(Mahasiswa $mahasiswa)
     {
-        //
+        return view('admin.mahasiswa.edit', compact('mahasiswa'));
     }
 
     /**
@@ -54,14 +76,39 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'nim' => 'required|min:10',
+            'nama' => 'required',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json($validation->errors(), 422);
+        }
+
+        // NIM 3120600016
+        $mahasiswa->update([
+            'user_id' => $request->user_id,
+            'nip' => $request->nim,
+            'nama' => $request->nama,
+            'gender' => $request->gender,
+            'tgl_lahir' => $request->tgl_lahir,
+            'asal' => $request->asal,
+        ]);
+
+        return redirect()->route('mahasiswa_index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mahasiswa $mahasiswa)
+    public function delete(Mahasiswa $mahasiswa)
     {
-        //
+        $user = User::where('id', $mahasiswa->user_id);
+
+        if ($mahasiswa->delete())
+            $user->delete();
+
+        return redirect()->route('mahasiswa_index');
     }
 }

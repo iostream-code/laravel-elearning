@@ -70,10 +70,16 @@
                                 {{ $data->asal }}
                             </td>
                             <td class="flex gap-2 px-6 py-4">
-                                <a href="#"
+                                <a href="{{ route('dosen_edit', $data) }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <a href="#"
-                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                                @if ($data->user->is_admin == 1)
+                                    <form action="{{ route('dosen_delete', $data) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

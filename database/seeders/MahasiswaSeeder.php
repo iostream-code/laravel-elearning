@@ -15,7 +15,7 @@ class MahasiswaSeeder extends Seeder
     public function run(): void
     {
         Mahasiswa::insert([
-            'user_id' => 2,
+            'user_id' => 3,
             'nim' => '3120600012',
             'nama' => 'Andre Kurniawan',
             'gender' => 1,

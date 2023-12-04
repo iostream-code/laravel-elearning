@@ -16,17 +16,19 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $data = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
         if (Auth::attempt($data)) {
             $request->session()->regenerate();
-
+            if (Auth::user()->status == 'dosen') {
+                if (Auth::user()->dosen->is_admin == true)
+                    return redirect()->route('admin_index');
+            } else
+                return redirect()->route('welcome');
+        } else
             return redirect()->route('welcome');
-        }
-
-        return back()->onlyInput('email');
     }
 
     public function logout()

@@ -14,14 +14,27 @@ class DosenSeeder extends Seeder
      */
     public function run(): void
     {
-        Dosen::insert([
-            'user_id' => 1,
-            'nip' => '1998091220151001',
-            'nama' => 'Joko Prambodo',
-            'is_admin' => true,
-            'gender' => 1,
-            'usia' => 35,
-            'asal' => 'Surabaya',
-        ]);
+        $data = [
+            [
+                'user_id' => 1,
+                'nip' => '9999999999999999',
+                'nama' => 'Admin',
+                'is_admin' => true,
+                'gender' => 1,
+                'usia' => 0,
+                'asal' => '',
+            ],
+            [
+                'user_id' => 2,
+                'nip' => '1998091220151001',
+                'nama' => 'Joko Prambodo',
+                'is_admin' => false,
+                'gender' => 1,
+                'usia' => 35,
+                'asal' => 'Surabaya',
+            ],
+        ];
+
+        Dosen::insert($data);
     }
 }
