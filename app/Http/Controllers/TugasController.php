@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Assigment;
+use App\Models\Tugas;
 use Illuminate\Http\Request;
 
-class AssigmentController extends Controller
+class TugasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class AssigmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Assigment $assigment)
+    public function show(Tugas $tugas)
     {
         //
     }
@@ -42,7 +42,7 @@ class AssigmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Assigment $assigment)
+    public function edit(Tugas $tugas)
     {
         //
     }
@@ -50,7 +50,7 @@ class AssigmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Assigment $assigment)
+    public function update(Request $request, Tugas $tugas)
     {
         //
     }
@@ -58,7 +58,7 @@ class AssigmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Assigment $assigment)
+    public function destroy(Tugas $tugas)
     {
         //
     }
