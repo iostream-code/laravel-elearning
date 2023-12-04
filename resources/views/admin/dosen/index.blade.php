@@ -72,7 +72,7 @@
                             <td class="flex gap-2 px-6 py-4">
                                 <a href="{{ route('dosen_edit', $data) }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                @if ($data->user->is_admin == 1)
+                                @if ($data->is_admin == 0)
                                     <form action="{{ route('dosen_delete', $data) }}" method="post">
                                         @csrf
                                         @method('DELETE')
