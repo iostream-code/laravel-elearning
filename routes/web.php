@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MahasiswaController;
 
 /*
@@ -55,4 +56,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/mahasiswa/{mahasiswa}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa_edit');
     Route::patch('/mahasiswa/{mahasiswa}/update', [MahasiswaController::class, 'update'])->name('mahasiswa_update');
     Route::delete('/mahasiswa/{mahasiswa}delete', [MahasiswaController::class, 'delete'])->name('mahasiswa_delete');
+
+    //Kelas Controller
+    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas_index');
 });
