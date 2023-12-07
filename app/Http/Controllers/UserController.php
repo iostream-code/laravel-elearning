@@ -5,10 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    /**
+     * index function
+     *
+     * @return void
+     */
+    public function index()
+    {
+        $users = User::all();
+
+        return view('admin.home', compact('users'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -33,16 +46,18 @@ class UserController extends Controller
             return response()->json($validation->errors(), 422);
         }
 
-        // dd($request->status);
+        $file = $request->file('photo');
+        $path = time() . '_' . $request->username . '.' . $file->getClientOriginalExtension();
+
+        Storage::disk('local')->put('public/' . $path, file_get_contents($file));
 
         $user = new User;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        $user->photo = $path;
         $user->save();
-
-        // dd($user->status);
 
         if ($user->status == 'dosen')
             return view('admin.dosen.create', compact('user'));

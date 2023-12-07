@@ -78,7 +78,6 @@ class DosenController extends Controller
     public function update(Request $request, Dosen $dosen)
     {
         $validation = Validator::make($request->all(), [
-            'user_id' => 'required',
             'nip' => 'required|min:16',
             'nama' => 'required',
         ]);
@@ -89,7 +88,6 @@ class DosenController extends Controller
 
         // NIP 1998091220151001
         $dosen->update([
-            'user_id' => $request->user_id,
             'nip' => $request->nip,
             'nama' => $request->nama,
             'gender' => $request->gender,

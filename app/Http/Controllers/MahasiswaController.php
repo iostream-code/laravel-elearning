@@ -45,7 +45,7 @@ class MahasiswaController extends Controller
         // NIM 3120600016
         Mahasiswa::create([
             'user_id' => $request->user_id,
-            'nip' => $request->nim,
+            'nim' => $request->nim,
             'nama' => $request->nama,
             'gender' => $request->gender,
             'tgl_lahir' => $request->tgl_lahir,
@@ -77,7 +77,6 @@ class MahasiswaController extends Controller
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
         $validation = Validator::make($request->all(), [
-            'user_id' => 'required',
             'nim' => 'required|min:10',
             'nama' => 'required',
         ]);
@@ -88,7 +87,6 @@ class MahasiswaController extends Controller
 
         // NIM 3120600016
         $mahasiswa->update([
-            'user_id' => $request->user_id,
             'nip' => $request->nim,
             'nama' => $request->nama,
             'gender' => $request->gender,

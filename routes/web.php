@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\DosenController;
-use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +34,7 @@ Route::get('/home', function () {
 
 Route::prefix('admin')->group(function () {
     //Admin Home
-    Route::get('/', function () {
-        return view('admin.index');
-    })->name('admin_index');
+    Route::get('/', [UserController::class, 'index'])->name('admin_index');
 
     //User
     Route::get('/user/create', [UserController::class, 'create'])->name('user_create');
